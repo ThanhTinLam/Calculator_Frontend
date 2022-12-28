@@ -1,0 +1,234 @@
+<html>
+<head>
+    <title>CALCULATOR</title>
+</head>
+<body>
+<table>
+    <tr>
+        <td colspan="5"><input id="number1" type="text"/></td>
+
+    </tr>
+    <tr>
+        <td>
+            <button onclick="addNumber(7)" class="btn" id="7">7</button>
+        </td>
+        <td>
+            <button onclick="addNumber(8)" class="btn" id="8">8</button>
+        </td>
+        <td>
+            <button onclick="addNumber(9)" class="btn" id="9">9</button>
+        </td>
+        <td>
+            <button onclick="addOperator('/')"> /</button>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <button onclick="addNumber(4)" class="btn" id="4">4</button>
+        </td>
+        <td>
+            <button onclick="addNumber(5)" class="btn" id="5">5</button>
+        </td>
+        <td>
+            <button onclick="addNumber(6)" class="btn" id="6">6</button>
+        </td>
+        <td>
+            <button onclick="addOperator('*')"> *</button>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <button onclick="addNumber(1)" class="btn" id="1">1</button>
+        </td>
+        <td>
+            <button onclick="addNumber(2)" class="btn" id="2">2</button>
+        </td>
+        <td>
+            <button onclick="addNumber(3)" class="btn" id="3">3</button>
+        </td>
+        <td>
+            <button onclick="addOperator('+')"> +</button>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <button onclick="addNumber(0)" class="btn" id="0">0</button>
+        </td>
+        <td>
+            <button onclick="clearButton()"> C</button>
+        </td>
+        <td>
+            <button onclick="onSubmit()"> =</button>
+        </td>
+        <td>
+            <button onclick="addOperator('-')"> -</button>
+        </td>
+    </tr>
+</table>
+</body>
+
+
+<script>
+    let value1;
+    let value2;
+    let operator;
+
+    function  clearButton(){
+        document.getElementById("number1").value ='';
+        value1 = '';
+        value2 = '';
+        operator = '';
+    }
+    function addOperator(userInput) {
+        let currentValue = document.getElementById("number1").value;
+        value1 = currentValue;
+        operator = userInput;
+        document.getElementById("number1").value = "";
+    }
+
+    function addNumber(userInput) {
+        var currentValue = document.getElementById("number1").value;
+        let finalValue = "" + currentValue + userInput;
+        document.getElementById("number1").value = finalValue;
+        if (!operator) {
+            value1 = finalValue;
+        } else {
+            value2 = finalValue;
+        }
+    }
+
+    function onSubmit() {
+        if (operator == "+") {
+            sum();
+        } else if (operator == "-") {
+            subtract();
+        } else if (operator == "/") {
+            divide();
+        } else if (operator == "*") {
+            multiple();
+        }
+    }
+
+    function sum() {
+        var number1 = value1;
+        var number2 = value2;
+
+        const userAction = async () => {
+            var data = {
+                num1: number1,
+                num2: number2,
+            };
+
+            var json = JSON.stringify(data);
+
+            const response = await fetch('http://localhost:8080/sum', {
+                method: 'POST',
+                body: json,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const myJson = await response.json(); //extract JSON from the http response
+            // do something with myJson
+            document.getElementById("number1").value = myJson;
+            // value1 = myJson;
+            // value2 = '';
+            // operator = '';
+        }
+        userAction();
+
+    }
+
+    function subtract() {
+        var number1 = value1;
+        var number2 = value2;
+
+        const userAction = async () => {
+            var data = {
+                num1: number1,
+                num2: number2,
+            };
+
+            var json = JSON.stringify(data);
+
+            const response = await fetch('http://localhost:8080/subtract', {
+                method: 'POST',
+                body: json,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const myJson = await response.json(); //extract JSON from the http response
+            // do something with myJson
+            document.getElementById("number1").value = myJson;
+            // value1 = myJson;
+            // value2 = '';
+            // operator = '';
+
+        }
+        userAction();
+
+    }
+
+    function multiple() {
+        var number1 = value1;
+        var number2 = value2;
+
+        const userAction = async () => {
+            var data = {
+                num1: number1,
+                num2: number2,
+            };
+
+            var json = JSON.stringify(data);
+
+            const response = await fetch('http://localhost:8080/multiple', {
+                method: 'POST',
+                body: json,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const myJson = await response.json(); //extract JSON from the http response
+            // do something with myJson
+            document.getElementById("number1").value = myJson;
+            // value1 = myJson;
+            // value2 = '';
+            // operator = '';
+
+        }
+        userAction();
+
+    }
+
+    function divide() {
+        var number1 = value1;
+        var number2 = value2;
+
+        const userAction = async () => {
+            var data = {
+                num1: number1,
+                num2: number2,
+            };
+
+            var json = JSON.stringify(data);
+
+            const response = await fetch('http://localhost:8080/divide', {
+                method: 'POST',
+                body: json,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const myJson = await response.json(); //extract JSON from the http response
+            // do something with myJson
+            document.getElementById("number1").value = myJson;
+            // value1 = myJson;
+            // value2 = '';
+            // operator = '';
+
+        }
+        userAction();
+    }
+</script>
+</html>
